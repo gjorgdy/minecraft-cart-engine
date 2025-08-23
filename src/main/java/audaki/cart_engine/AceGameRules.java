@@ -9,6 +9,8 @@ public class AceGameRules {
     public static GameRules.Key<GameRules.IntegerValue> MINECART_MAX_SPEED_PLAYER_RIDER;
     public static GameRules.Key<GameRules.IntegerValue> MINECART_MAX_SPEED_OTHER_RIDER;
     public static GameRules.Key<GameRules.IntegerValue> MINECART_MAX_SPEED_EMPTY_RIDER;
+    public static GameRules.Key<GameRules.IntegerValue> MINECART_HALT_SPEED_THRESHOLD;
+    public static GameRules.Key<GameRules.IntegerValue> MINECART_HALT_SPEED_MULTIPLIER;
 
     public static void register() {
         MINECART_MAX_SPEED_PLAYER_RIDER = GameRuleRegistry.register("minecartMaxSpeedPlayerRider",
@@ -20,5 +22,11 @@ public class AceGameRules {
         MINECART_MAX_SPEED_EMPTY_RIDER = GameRuleRegistry.register("minecartMaxSpeedEmptyRider",
                 GameRules.Category.PLAYER,
                 GameRuleFactory.createIntRule(0));
+        MINECART_HALT_SPEED_THRESHOLD = GameRuleRegistry.register("minecartHaltSpeedThreshold",
+                GameRules.Category.PLAYER,
+                GameRuleFactory.createIntRule(3));
+        MINECART_HALT_SPEED_MULTIPLIER = GameRuleRegistry.register("minecartHaltSpeedModifier",
+                GameRules.Category.PLAYER,
+                GameRuleFactory.createIntRule(50));
     }
 }
