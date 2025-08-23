@@ -25,7 +25,7 @@ public class AceGameRules {
         MINECART_HALT_SPEED_THRESHOLD = GameRuleRegistry.register("minecartHaltSpeedThreshold",
                 GameRules.Category.PLAYER,
                 GameRuleFactory.createIntRule(3));
-        MINECART_HALT_SPEED_MULTIPLIER = GameRuleRegistry.register("minecartHaltSpeedModifier",
+        MINECART_HALT_SPEED_MULTIPLIER = GameRuleRegistry.register("minecartHaltSpeedMultiplier",
                 GameRules.Category.PLAYER,
                 GameRuleFactory.createIntRule(50));
     }
