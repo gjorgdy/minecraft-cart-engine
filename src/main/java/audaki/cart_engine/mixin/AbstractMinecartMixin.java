@@ -1,7 +1,8 @@
 package audaki.cart_engine.mixin;
 
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.vehicle.*;
+import net.minecraft.world.entity.vehicle.VehicleEntity;
+import net.minecraft.world.entity.vehicle.minecart.*;
 import net.minecraft.world.level.Level;
 import org.spongepowered.asm.mixin.*;
 import org.spongepowered.asm.mixin.injection.At;

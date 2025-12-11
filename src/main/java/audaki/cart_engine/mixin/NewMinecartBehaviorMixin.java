@@ -3,19 +3,13 @@ package audaki.cart_engine.mixin;
 import audaki.cart_engine.AceGameRules;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.vehicle.AbstractMinecart;
-import net.minecraft.world.entity.vehicle.MinecartBehavior;
-import net.minecraft.world.entity.vehicle.NewMinecartBehavior;
-import net.minecraft.world.level.GameRules;
+import net.minecraft.world.entity.vehicle.minecart.*;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import java.util.function.Consumer;
 import java.util.function.IntConsumer;
 
 @Mixin(NewMinecartBehavior.class)
@@ -41,15 +35,15 @@ public abstract class NewMinecartBehaviorMixin extends MinecartBehavior {
 
         Entity passenger = minecart.getFirstPassenger();
         if (passenger == null) {
-            setSpeed.accept(level.getGameRules().getInt(AceGameRules.MINECART_MAX_SPEED_EMPTY_RIDER));
+            setSpeed.accept(level.getGameRules().get(AceGameRules.MINECART_MAX_SPEED_EMPTY_RIDER));
             return;
         }
 
         if (passenger instanceof Player) {
-            setSpeed.accept(level.getGameRules().getInt(AceGameRules.MINECART_MAX_SPEED_PLAYER_RIDER));
+            setSpeed.accept(level.getGameRules().get(AceGameRules.MINECART_MAX_SPEED_PLAYER_RIDER));
             return;
         }
 
-        setSpeed.accept(level.getGameRules().getInt(AceGameRules.MINECART_MAX_SPEED_OTHER_RIDER));
+        setSpeed.accept(level.getGameRules().get(AceGameRules.MINECART_MAX_SPEED_OTHER_RIDER));
     }
 }
