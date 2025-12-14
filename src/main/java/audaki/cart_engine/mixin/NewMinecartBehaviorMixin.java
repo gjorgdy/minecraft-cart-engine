@@ -10,7 +10,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.entity.vehicle.minecart.*;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
@@ -24,9 +23,6 @@ public abstract class NewMinecartBehaviorMixin extends MinecartBehavior {
     protected NewMinecartBehaviorMixin(AbstractMinecart abstractMinecart) {
         super(abstractMinecart);
     }
-
-    @Unique
-    private final ServerLevel level = (ServerLevel) ((NewMinecartBehavior) (Object) this).level();
 
     @Inject(at = @At("HEAD"), method = "getMaxSpeed", cancellable = true)
     public void _getMaxSpeed(ServerLevel level, CallbackInfoReturnable<Double> cir) {
@@ -61,10 +57,11 @@ public abstract class NewMinecartBehaviorMixin extends MinecartBehavior {
         at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/vehicle/minecart/NewMinecartBehavior;calculateHaltTrackSpeed(Lnet/minecraft/world/phys/Vec3;Lnet/minecraft/world/level/block/state/BlockState;)Lnet/minecraft/world/phys/Vec3;")
     )
     public Vec3 calculateHaltTrackSpeed(NewMinecartBehavior instance, Vec3 vec3, BlockState blockState) {
+        if (!(level() instanceof ServerLevel serverLevel)) return vec3;
         if (blockState.is(Blocks.POWERED_RAIL) && !(Boolean)blockState.getValue(PoweredRailBlock.POWERED)) {
-            return vec3.length() * 100 < level.getGameRules().get(AceGameRules.MINECART_HALT_SPEED_THRESHOLD)
+            return vec3.length() * 100 < serverLevel.getGameRules().get(AceGameRules.MINECART_HALT_SPEED_THRESHOLD)
                     ? Vec3.ZERO
-                    : vec3.scale(level.getGameRules().get(AceGameRules.MINECART_HALT_SPEED_MULTIPLIER) / 100d);
+                    : vec3.scale(serverLevel.getGameRules().get(AceGameRules.MINECART_HALT_SPEED_MULTIPLIER) / 100d);
         } else {
             return vec3;
         }
