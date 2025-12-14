@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [4.3.0] - 2025-12-11
+- Update for Minecraft 1.21.11+
+- Game rules changed to the following names:
+  - minecraft:max_minecart_speed (Generic max speed for all carts unless overridden)
+  - ace:speed_player (If not 0, overrides speed only for player ridden carts)
+  - ace:speed_other (If not 0, overrides speed only for non-player ridden carts)
+  - ace:speed_empty (If not 0, overrides speed only for rideable carts that are empty)
+
 ## [4.2.1] - 2025-06-28
 - Rebuild for Minecraft 1.21.6/1.21.7+
 

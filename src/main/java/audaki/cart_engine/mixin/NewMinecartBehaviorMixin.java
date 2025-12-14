@@ -11,8 +11,8 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.PoweredRailBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.entity.vehicle.minecart.*;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
@@ -46,16 +46,16 @@ public abstract class NewMinecartBehaviorMixin extends MinecartBehavior {
 
         Entity passenger = minecart.getFirstPassenger();
         if (passenger == null) {
-            setSpeed.accept(level.getGameRules().getInt(AceGameRules.MINECART_MAX_SPEED_EMPTY_RIDER));
+            setSpeed.accept(level.getGameRules().get(AceGameRules.MINECART_MAX_SPEED_EMPTY_RIDER));
             return;
         }
 
         if (passenger instanceof Player) {
-            setSpeed.accept(level.getGameRules().getInt(AceGameRules.MINECART_MAX_SPEED_PLAYER_RIDER));
+            setSpeed.accept(level.getGameRules().get(AceGameRules.MINECART_MAX_SPEED_PLAYER_RIDER));
             return;
         }
 
-        setSpeed.accept(level.getGameRules().getInt(AceGameRules.MINECART_MAX_SPEED_OTHER_RIDER));
+        setSpeed.accept(level.getGameRules().get(AceGameRules.MINECART_MAX_SPEED_OTHER_RIDER));
     }
 
     @Redirect(
@@ -64,9 +64,9 @@ public abstract class NewMinecartBehaviorMixin extends MinecartBehavior {
     )
     public Vec3 calculateHaltTrackSpeed(NewMinecartBehavior instance, Vec3 vec3, BlockState blockState) {
         if (blockState.is(Blocks.POWERED_RAIL) && !(Boolean)blockState.getValue(PoweredRailBlock.POWERED)) {
-            return vec3.length() * 100 < level.getGameRules().getInt(AceGameRules.MINECART_HALT_SPEED_THRESHOLD)
+            return vec3.length() * 100 < level.getGameRules().get(AceGameRules.MINECART_HALT_SPEED_THRESHOLD)
                     ? Vec3.ZERO
-                    : vec3.scale(level.getGameRules().getInt(AceGameRules.MINECART_HALT_SPEED_MULTIPLIER) / 100d);
+                    : vec3.scale(level.getGameRules().get(AceGameRules.MINECART_HALT_SPEED_MULTIPLIER) / 100d);
         } else {
             return vec3;
         }
